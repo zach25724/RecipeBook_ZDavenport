@@ -1,0 +1,120 @@
+﻿<UserControl x:Class="RecipeApp.Views.RecipeListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RecipeApp.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="597" d:DesignWidth="1392">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="RecipesList">
+            <TextBlock FontSize="20" Foreground="Black" Text="{Binding Path=RecipeName}" TextWrapping="Wrap"/>
+        </DataTemplate>
+        <DataTemplate x:Key="StepList">
+            <DockPanel>
+                <TextBlock FontSize="20" Foreground="Black" Text="{Binding Path=Number}"/>
+                <TextBlock FontSize="20" Foreground="Black" Text=". "/>
+                <TextBlock FontSize="20" Foreground="Black" Text="{Binding Path=Step}" TextWrapping="Wrap"/>
+            </DockPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="IngredientList">
+            <DockPanel>
+                <BulletDecorator>
+                    <BulletDecorator.Bullet>
+                        <Ellipse Height="5" Width="5" Fill="Black" Margin="0,2,0,0"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock FontSize="20" Foreground="Black" Margin="5,0,0,0" Text="{Binding}" TextWrapping="Wrap"/>
+                </BulletDecorator>
+            </DockPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    
+    <Grid Background="#FF87CAEA">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".8*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!--Recipe List-->
+            <DockPanel>
+                <TextBlock Text="Recipes" TextAlignment="Center" FontSize="25px" Margin="0,10,0,0" DockPanel.Dock="Top"/>
+                <Border BorderBrush="Black" Margin="20,10,20,10" BorderThickness="1">
+                    <ListBox x:Name="recipeListBox" Background="#FF87CAEA" Foreground="Black" BorderThickness="0" ItemsSource="{Binding Path=RecipeList}" 
+                             ItemTemplate="{StaticResource ResourceKey=RecipesList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             SelectedItem="{Binding Path=CurrentRecipe, Mode=OneWayToSource}"/>
+                </Border>
+            </DockPanel>
+            <DockPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Button Content="Add Recipe" Padding="10,5" Margin="20,0,20,10" Command="{Binding AddRecipeViewCommand}"/>
+                <Button Content="Delete Recipe" Padding="10,5" Margin="20,0,20,10" />
+                <Button Content="Update Recipe" Padding="10,5" Margin="20,0,20,10"/>
+            </DockPanel>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!--Recipe Name-->
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Bottom" Orientation="Horizontal">
+                <TextBlock Text="Recipe Name:" Margin="20,0,8,0" FontSize="20"/>
+                <TextBlock Text="{Binding Path=CurrentRecipe.RecipeName}" Name="recipeName" FontSize="20" MaxWidth="800" MinWidth="800" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <!--Prep Time and Cook Time-->
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="4" VerticalAlignment="Top" Margin="0,10,0,5">
+                <TextBlock Text="Prep Time:" Margin="20,0,8,0" FontSize="20"/>
+                <TextBlock Text="{Binding Path=CurrentRecipe.PrepTime}" Name="prepTime" FontSize="20" Margin="0,0,8,0"/>
+                <TextBlock Text="minutes" FontSize="20" Margin="0,0,30,0"/>
+                <TextBlock Text="Cook Time:" Margin="20,0,8,0" FontSize="20"/>
+                <TextBlock Text="{Binding Path=CurrentRecipe.CookTime}" Name="cookTime" FontSize="20" Margin="0,0,8,0"/>
+                <TextBlock Text="minutes" FontSize="20"/>
+            </StackPanel>
+
+            <!--Steps list-->
+            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="Steps" FontSize="20" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,45,0,0"/>
+            <Border BorderBrush="Black" Margin="10,10,10,1" BorderThickness="1" Grid.Row="2" Grid.RowSpan="5" Grid.ColumnSpan="2">
+                <ListView x:Name="StepListView" Background="#FF87CAEA" Foreground="Black" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                         ItemsSource="{Binding Path=Steps}" ItemTemplate="{StaticResource ResourceKey=StepList}"/>
+            </Border>
+
+            <!--Ingredients list-->
+            <TextBlock Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Text="Ingredients" FontSize="20" HorizontalAlignment="Center" TextDecorations="Underline" Margin="0,45,0,0"/>
+            <Border BorderBrush="Black" Margin="10,10,20,1" BorderThickness="1" Grid.Row="2" Grid.Column="2" Grid.RowSpan="5" Grid.ColumnSpan="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListView x:Name="IngredientListViewLeft" Grid.Column="0" Background="#FF87CAEA" Foreground="Black" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                         BorderThickness="0" ItemsSource="{Binding Path=IngredientsLeft}" ItemTemplate="{StaticResource ResourceKey=IngredientList}"/>
+                    <ListView x:Name="IngredientListViewRight" Grid.Column="1" Background="#FF87CAEA" Foreground="Black" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                         BorderThickness="0" ItemsSource="{Binding Path=IngredientsRight}" ItemTemplate="{StaticResource ResourceKey=IngredientList}"/>
+                </Grid>
+                
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
