@@ -16,6 +16,8 @@ namespace RecipeApp.ViewModels
         private Recipe _recipe;
         private string _step;
         private string _ingredient;
+        private readonly Recipe _updatableRecipe;
+        private readonly bool _isUpdatable;
         private readonly NavigationViewModel _navigationViewModel;
         private readonly RecipeListViewModel _recipeListViewModel;
 
@@ -29,9 +31,26 @@ namespace RecipeApp.ViewModels
         public RelayCommand CancelRecipeCommand { get; private set; }
 
         //Constructors
-        public RecipeViewModel(RecipeListViewModel recipeListViewModel, NavigationViewModel navigationViewModel)
+        public RecipeViewModel(RecipeListViewModel recipeListViewModel, NavigationViewModel navigationViewModel, Recipe otherRecipe) : this()
+        {
+            _recipe = new Recipe(otherRecipe);
+            _updatableRecipe = new Recipe(otherRecipe);
+            _isUpdatable = true;
+            _navigationViewModel = navigationViewModel;
+            _recipeListViewModel = recipeListViewModel;
+        }
+
+        public RecipeViewModel(RecipeListViewModel recipeListViewModel, NavigationViewModel navigationViewModel) : this()
         {
             _recipe = new Recipe();
+            _updatableRecipe = null;
+            _isUpdatable = false;
+            _navigationViewModel = navigationViewModel;
+            _recipeListViewModel = recipeListViewModel;
+        }
+
+        public RecipeViewModel()
+        {
             AddStepCommand = new RelayCommand(AddStep, CanAddStep);
             DeleteStepCommand = new RelayCommand(DeleteStep, CanDeleteStep);
             UpdateStepCommand = new RelayCommand(UpdateStep, CanUpdateStep);
@@ -39,11 +58,7 @@ namespace RecipeApp.ViewModels
             DeleteIngredientCommand = new RelayCommand(DeleteIngredient, CanDeleteIngredient);
             SaveRecipeCommand = new RelayCommand(SaveRecipe, CanSaveRecipe);
             CancelRecipeCommand = new RelayCommand(CancelRecipe);
-            _navigationViewModel = navigationViewModel;
-            _recipeListViewModel = recipeListViewModel;
         }
-
-        
 
         public Recipe Recipe
         {
@@ -207,7 +222,14 @@ namespace RecipeApp.ViewModels
         //SaveRecipe
         private void SaveRecipe(object obj)
         {
-            _recipeListViewModel.AddRecipe(Recipe);
+            if (_isUpdatable)
+            {
+                _recipeListViewModel.UpdateRecipe(_updatableRecipe, _recipe);
+            }
+            else
+            {
+                _recipeListViewModel.AddRecipe(_recipe);
+            }
             RecipeBookState.Save(_recipeListViewModel);
             _recipeListViewModel.ClearStepIngedientLists();
             _navigationViewModel.SelectedViewModel = _recipeListViewModel;
@@ -215,7 +237,7 @@ namespace RecipeApp.ViewModels
 
         private bool CanSaveRecipe(object obj)
         {
-            if (!string.IsNullOrWhiteSpace(RecipeName) && !_recipeListViewModel.RecipeBook.Recipes.Contains(Recipe))
+            if (!string.IsNullOrWhiteSpace(RecipeName))
                 return true;
             return false;
         }

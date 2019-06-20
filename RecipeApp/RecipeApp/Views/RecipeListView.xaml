@@ -52,9 +52,9 @@
                 </Border>
             </DockPanel>
             <DockPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Button Content="Add Recipe" Padding="10,5" Margin="20,0,20,10" Command="{Binding AddRecipeViewCommand}"/>
-                <Button Content="Delete Recipe" Padding="10,5" Margin="20,0,20,10" />
-                <Button Content="Update Recipe" Padding="10,5" Margin="20,0,20,10"/>
+                <Button Content="Add Recipe" Padding="10,5" Margin="20,0,20,10" Command="{Binding AddRecipeCommand}"/>
+                <Button Content="Delete Recipe" Padding="10,5" Margin="20,0,20,10" Command="{Binding DeleteRecipeCommand}"/>
+                <Button Content="Update Recipe" Padding="10,5" Margin="20,0,20,10" Command="{Binding UpdateRecipeCommand}"/>
             </DockPanel>
         </Grid>
 

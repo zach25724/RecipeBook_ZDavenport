@@ -58,9 +58,19 @@ namespace RecipeApp.Models
         {
             if (_recipes == null)
                 _recipes = new List<Recipe>();
-            if (recipe != null && !_recipes.Contains(recipe))
+            if (!_recipes.Contains(recipe))
             {
                 _recipes.Add(recipe);
+            }
+        }
+
+        //Update recipe in book
+        public void UpdateRecipe(Recipe currentRecipe, Recipe newRecipe)
+        {
+            if (_recipes.Contains(currentRecipe) && !_recipes.Contains(newRecipe))
+            {
+                int index = _recipes.IndexOf(currentRecipe);
+                _recipes[index] = newRecipe;
             }
         }
 

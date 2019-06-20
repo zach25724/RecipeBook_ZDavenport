@@ -39,11 +39,11 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="8" VerticalAlignment="Top" HorizontalAlignment="Left">
             <TextBlock Text="Recipe Name:" FontSize="20" Margin="20,25,10,20"/>
             <TextBox Name="RecipeNameTextBox" Margin="0,20" MinWidth="500" MaxWidth="500" MaxHeight="35" FontSize="15" Padding="5" 
-                     Text="{Binding Path=RecipeName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+                     Text="{Binding Path=RecipeName, Mode=TwoWay}"/>
             <TextBlock Text="Prep Time:" FontSize="20" Margin="20,25,10,20"/>
-            <TextBox Margin="0,20" FontSize="15" MinWidth="50" MaxWidth="50" MinHeight="35" MaxHeight="35" Padding="5" Text="{Binding Path=PrepTime, Mode=OneWayToSource}"/>
+            <TextBox Margin="0,20" FontSize="15" MinWidth="50" MaxWidth="50" MinHeight="35" MaxHeight="35" Padding="5" Text="{Binding Path=PrepTime, Mode=TwoWay}"/>
             <TextBlock Text="Cook Time:" FontSize="20" Margin="20,25,10,20"/>
-            <TextBox Margin="0,20" FontSize="15" MinWidth="50" MaxWidth="50" MinHeight="35" MaxHeight="35" Padding="5" Text="{Binding Path=CookTime, Mode=OneWayToSource}"/>
+            <TextBox Margin="0,20" FontSize="15" MinWidth="50" MaxWidth="50" MinHeight="35" MaxHeight="35" Padding="5" Text="{Binding Path=CookTime, Mode=TwoWay}"/>
         </StackPanel>
 
         <!--Steps-->

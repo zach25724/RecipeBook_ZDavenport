@@ -24,7 +24,11 @@ namespace RecipeApp.ViewModels
 
         //Commands
         [XmlIgnore]
-        public RelayCommand AddRecipeViewCommand { get; private set; }
+        public RelayCommand AddRecipeCommand { get; private set; }
+        [XmlIgnore]
+        public RelayCommand DeleteRecipeCommand { get; private set; }
+        [XmlIgnore]
+        public RelayCommand UpdateRecipeCommand { get; private set; }
 
         //Constructors
         public RecipeListViewModel()
@@ -33,7 +37,9 @@ namespace RecipeApp.ViewModels
             _steps = new ObservableCollection<NumberedStep>();
             _ingredientsLeft = new ObservableCollection<string>();
             _ingredientsRight = new ObservableCollection<string>();
-            AddRecipeViewCommand = new RelayCommand(OpenAddRecipeView);
+            AddRecipeCommand = new RelayCommand(AddRecipe);
+            DeleteRecipeCommand = new RelayCommand(DeleteRecipe, CanDeleteRecipe);
+            UpdateRecipeCommand = new RelayCommand(UpdateRecipe, CanUpdateRecipe);
         }
 
         public RecipeListViewModel(NavigationViewModel navigationViewModel) :this()
@@ -138,10 +144,44 @@ namespace RecipeApp.ViewModels
             RecipeBook.Sort();
         }
 
+        //Update recipe in RecipeBook
+        public void UpdateRecipe(Recipe currentRecipe, Recipe newRecipe)
+        {
+            RecipeBook.UpdateRecipe(currentRecipe, newRecipe);
+            RecipeBook.Sort();
+        }
+
         //Command implementation
-        private void OpenAddRecipeView(object obj)
+        private void AddRecipe(object obj)
         {
             _navigationViewModel.SelectedViewModel = new RecipeViewModel(this, _navigationViewModel);
+        }
+
+        private void DeleteRecipe(object obj)
+        {
+            RecipeBook.Recipes.Remove(CurrentRecipe);
+            OnPropertyChange(nameof(RecipeList));
+            ClearStepIngedientLists();
+            RecipeBookState.Save(this);
+        }
+
+        private bool CanDeleteRecipe(object obj)
+        {
+            if (CurrentRecipe != null)
+                return true;
+            return false;
+        }
+
+        private void UpdateRecipe(object obj)
+        {
+            _navigationViewModel.SelectedViewModel = new RecipeViewModel(this, _navigationViewModel, CurrentRecipe);
+        }
+
+        private bool CanUpdateRecipe(object obj)
+        {
+            if (CurrentRecipe != null)
+                return true;
+            return false;
         }
 
         //INotifyPropertyChanged implementation
