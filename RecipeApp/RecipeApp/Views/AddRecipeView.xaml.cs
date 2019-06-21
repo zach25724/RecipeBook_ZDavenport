@@ -50,6 +50,17 @@ namespace RecipeApp.Views
             }
         }
 
-        
+        //Select text of Prep and Cook times on textbox focus
+        private void PrepTimeTextbox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textbox = sender as TextBox;
+            textbox.SelectAll();
+        }
+
+        private void CookTimeTextbox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textbox = sender as TextBox;
+            textbox.SelectAll();
+        }
     }
 }
