@@ -67,11 +67,15 @@ namespace RecipeApp.Models
         //Update recipe in book
         public void UpdateRecipe(Recipe currentRecipe, Recipe newRecipe)
         {
-            if (_recipes.Contains(currentRecipe) && !_recipes.Contains(newRecipe))
+            if (currentRecipe != newRecipe)
             {
-                int index = _recipes.IndexOf(currentRecipe);
-                _recipes[index] = newRecipe;
+                if (_recipes.Contains(newRecipe))
+                {
+                    return;
+                }
             }
+            int index = _recipes.IndexOf(currentRecipe);
+            _recipes[index] = newRecipe;
         }
 
         //Remove recipe from book
