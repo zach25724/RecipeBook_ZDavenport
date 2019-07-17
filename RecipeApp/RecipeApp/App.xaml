@@ -3,7 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:RecipeApp"
              StartupUri="MainWindow.xaml">
+    
     <Application.Resources>
-         
+        <Style TargetType="{x:Type TextBlock}" x:Key="MainTextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontFamily" Value="Century Schoolbook"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}" x:Key="PrepCookMinutes" BasedOn="{StaticResource MainTextBlock}">
+            <Setter Property="Visibility" Value="Visible"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=recipeListBox, Path=SelectedIndex}" Value="-1">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type Border}" x:Key="Border">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+        </Style>
+
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="FontFamily" Value="Century Schoolbook"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Background" Value="#FF87CAEA"/>
+        </Style>
     </Application.Resources>
 </Application>

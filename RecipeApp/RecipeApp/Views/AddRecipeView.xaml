@@ -9,7 +9,7 @@
 
     <UserControl.Resources>
         <DataTemplate x:Key="ListTemplate">
-            <TextBlock FontSize="20" Foreground="Black" Text="{Binding}" TextWrapping="Wrap"/>
+            <TextBlock Text="{Binding}" Style="{StaticResource MainTextBlock}" TextWrapping="Wrap"/>
         </DataTemplate>
     </UserControl.Resources>
 
@@ -37,21 +37,21 @@
 
         <!---RecipeName, PrepTime, and CookTime-->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="8" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <TextBlock Text="Recipe Name:" FontSize="20" Margin="20,25,10,20"/>
+            <TextBlock Text="Recipe Name:" Margin="20,25,10,20" Style="{StaticResource MainTextBlock}"/>
             <TextBox Name="RecipeNameTextBox" Margin="0,20" MinWidth="500" MaxWidth="500" MaxHeight="35" FontSize="15" Padding="5" 
                      Text="{Binding Path=RecipeName, Mode=TwoWay}"/>
-            <TextBlock Text="Prep Time:" FontSize="20" Margin="20,25,10,20"/>
+            <TextBlock Text="Prep Time:" Margin="20,25,10,20" Style="{StaticResource MainTextBlock}"/>
             <TextBox Name="PrepTimeTextbox" Margin="0,20" FontSize="15" MinWidth="50" MaxWidth="50" MinHeight="35" MaxHeight="35" Padding="5" 
                      Text="{Binding Path=PrepTime, Mode=TwoWay}" GotFocus="PrepTimeTextbox_GotFocus"/>
-            <TextBlock Text="Cook Time:" FontSize="20" Margin="20,25,10,20"/>
+            <TextBlock Text="Cook Time:" Margin="20,25,10,20" Style="{StaticResource MainTextBlock}"/>
             <TextBox Name="CookTimeTextbox" Margin="0,20" FontSize="15" MinWidth="50" MaxWidth="50" MinHeight="35" MaxHeight="35" Padding="5" 
                      Text="{Binding Path=CookTime, Mode=TwoWay}" GotFocus="CookTimeTextbox_GotFocus"/>
         </StackPanel>
 
         <!--Steps-->
         <DockPanel Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="4" >
-            <TextBlock Text="Steps:" VerticalAlignment="Top" FontSize="20" Margin="20,10,25,0"/>
-            <Border BorderBrush="Black" Margin="10" BorderThickness="1">
+            <TextBlock Text="Steps:" VerticalAlignment="Top" Margin="20,10,25,0" Style="{StaticResource MainTextBlock}"/>
+            <Border Margin="10" Style="{StaticResource Border}">
                 <ListBox Name="StepList" Background="#FF87CAEA" ItemsSource="{Binding Path=Steps}" ItemTemplate="{StaticResource ResourceKey=ListTemplate}"
                          BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="StepList_SelectionChanged" />
             </Border>
@@ -60,36 +60,36 @@
             <TextBox x:Name="StepTextBox" HorizontalAlignment="Stretch" Margin="110,0,10,0" MinWidth="195" MaxHeight="100" TextWrapping="Wrap" 
                      MinHeight="100" FontSize="15" Padding="5" Text="{Binding Path=Step, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" KeyDown="StepTextBox_KeyDown"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="110,5">
-                <Button Name="AddStepButton" Content="Add" Height="30" Width="80" Command="{Binding AddStepCommand}" CommandParameter="{Binding ElementName=StepTextBox}" />
-                <Button Name="UpdateStepButton" Content="Update" Height="30" Width="80" Margin="16,0,0,0" Command="{Binding UpdateStepCommand}" 
+                <Button Name="AddStepButton" Content="Add" Command="{Binding AddStepCommand}" CommandParameter="{Binding ElementName=StepTextBox}" />
+                <Button Name="UpdateStepButton" Content="Update" Margin="16,0,0,0" Command="{Binding UpdateStepCommand}" 
                         CommandParameter="{Binding ElementName=StepList, Path=SelectedItem}"/>
-                <Button Name="DeleteStepButton" Content="Delete" Height="30" Width="80" Margin="16,0,0,0" Command="{Binding DeleteStepCommand}" 
+                <Button Name="DeleteStepButton" Content="Delete" Margin="16,0,0,0" Command="{Binding DeleteStepCommand}" 
                         CommandParameter="{Binding ElementName=StepList, Path=SelectedItem}"/>
             </StackPanel>
         </StackPanel>
         
         <!--Ingredients-->
         <DockPanel Grid.Row="1" Grid.Column="4" Grid.RowSpan="4" Grid.ColumnSpan="3" >
-            <TextBlock Text="Ingredients:" VerticalAlignment="Top" FontSize="20" Margin="20,10,25,0"/>
-            <Border BorderBrush="Black" Margin="10" BorderThickness="1">
+            <TextBlock Text="Ingredients:" VerticalAlignment="Top" Margin="20,10,25,0" Style="{StaticResource MainTextBlock}"/>
+            <Border Margin="10" Style="{StaticResource Border}">
                 <ListBox Name="IngredientList" Background="#FF87CAEA" ItemsSource="{Binding Path=Ingredients}" ItemTemplate="{StaticResource ResourceKey=ListTemplate}"
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled" BorderThickness="0"/>
             </Border>
         </DockPanel>
         <StackPanel Orientation="Vertical" Grid.Column="4" Grid.Row="5" Grid.ColumnSpan="3">
-            <TextBox Name="IngredientTextBox" HorizontalAlignment="Stretch" Margin="160,0,10,0" MinWidth="195" MaxHeight="35" MinHeight="35" FontSize="15"
+            <TextBox Name="IngredientTextBox" HorizontalAlignment="Stretch" Margin="165,0,10,0" MinWidth="195" MaxHeight="35" MinHeight="35" FontSize="15"
                         Padding="5" Text="{Binding Path=Ingredient, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" KeyDown="IngredientTextBox_KeyDown" />
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="160,5">
-                <Button Name="AddIngredientButton" Content="Add" Height="30" Width="80" Command="{Binding AddIngredientCommand}" CommandParameter="{Binding ElementName=IngredientTextBox}" />
-                <Button Name="DeleteIngredientButton" Content="Delete" Height="30" Width="80" Margin="16,0,0,0" Command="{Binding DeleteIngredientCommand}"
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="165,5,0,0">
+                <Button Name="AddIngredientButton" Content="Add" Command="{Binding AddIngredientCommand}" CommandParameter="{Binding ElementName=IngredientTextBox}" />
+                <Button Name="DeleteIngredientButton" Content="Delete" Margin="16,0,0,0" Command="{Binding DeleteIngredientCommand}"
                         CommandParameter="{Binding ElementName=IngredientList, Path=SelectedItem}"/>
             </StackPanel>
         </StackPanel>
 
         <!--Save / Cancel Buttons-->
-        <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-            <Button Name="SaveRecipe" Content="Save Recipe" Height="30" Width="100" Margin="10" Command="{Binding SaveRecipeCommand}"/>
-            <Button Name="Cancel" Content="Cancel" Height="30" Width="100" Margin="10" Command="{Binding CancelRecipeCommand}" />
+        <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="50,0">
+            <Button Name="SaveRecipe" Content="Save" Width="100" Margin="10" Command="{Binding SaveRecipeCommand}"/>
+            <Button Name="Cancel" Content="Cancel" Width="100" Margin="10" Command="{Binding CancelRecipeCommand}" />
         </StackPanel>
         
 

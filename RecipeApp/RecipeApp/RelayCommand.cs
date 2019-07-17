@@ -18,10 +18,7 @@ namespace RecipeApp
 
         public RelayCommand(Action<object> execute, Predicate<object> canExecute)
         {
-            if (execute == null)
-                throw new NullReferenceException("execute");
-
-            _execute = execute;
+            _execute = execute ?? throw new NullReferenceException("execute");
             _canExecute = canExecute;
         }
 

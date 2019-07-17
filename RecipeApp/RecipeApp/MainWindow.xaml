@@ -7,7 +7,7 @@
         xmlns:viewmodels="clr-namespace:RecipeApp.ViewModels"
         xmlns:views="clr-namespace:RecipeApp.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="788" Width="1400" MinHeight="788" MinWidth="1400" ResizeMode="CanResizeWithGrip">
+        Title="Recipe Book" Height="788" Width="1400" MinHeight="788" MinWidth="1400" ResizeMode="CanResizeWithGrip">
     <Window.Resources>
         <DataTemplate x:Name="recipeListViewTemplate" DataType="{x:Type viewmodels:RecipeListViewModel}">
             <views:RecipeListView DataContext="{Binding}"/>
@@ -25,8 +25,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1.2*"/>
-            <RowDefinition Height=".4*"/>
+            <RowDefinition Height="160"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -35,12 +34,26 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Canvas Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#FF158CC3">
-        </Canvas>
+        <!--Title-->
+        <Canvas Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#FF158CC3"></Canvas>
+        <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <Image Margin="15,35,0,0">
+                <Image.Source>
+                    <BitmapImage UriSource="/Images/cat1.png"/>
+                </Image.Source>
+            </Image>
+            <TextBlock FontSize="90" Text="Recipe Book" Margin="20,26,400,0" Style="{StaticResource MainTextBlock}"/>
+            <Image Margin="10,81,30,0" DockPanel.Dock="Right">
+                <Image.Source>
+                    <BitmapImage UriSource="/Images/cat2.png"/>
+                </Image.Source>
+            </Image>
+            <TextBlock FontSize="25" Style="{StaticResource MainTextBlock}" Text="By Zachary Davenport" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,0,7" DockPanel.Dock="Right"/>
+        </DockPanel>
+        <Canvas Height="5" Background="Black" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Bottom" Margin="0,0,0,40"/>
+        <Canvas Height="5" Background="Black" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Bottom"/>
 
-        <Canvas Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Background="#FF000A09">
-        </Canvas>
-
-        <ContentControl x:Name="ContentView" Grid.Row="2" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="3" Content="{Binding SelectedViewModel}"/>
+        <!--Content for all views-->
+        <ContentControl x:Name="ContentView" Grid.Row="1" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="3" Content="{Binding SelectedViewModel}"/>
     </Grid>
 </Window>
